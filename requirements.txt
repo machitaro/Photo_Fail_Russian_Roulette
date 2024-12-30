@@ -1,0 +1,7 @@
+flask==3.1.0
+opencv-python-headless==4.10.0.84
+cmake==3.31.2
+dlib==19.24.2
+numpy==1.26.4
+python-dotenv==1.0.1
+gunicorn==21.2.0

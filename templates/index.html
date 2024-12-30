@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blink Detection App</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <h1>Photo Fail Russian Roulette</h1>
+    
+    <div class="controls">
+        <button id="start-btn">Start</button>
+        <button id="stop-btn" disabled>Stop</button>
+        <button id="settings-btn">Settings</button>
+    </div>
+
+    <div id="settings-panel">
+        <div class="settings-section">
+            <h3>Display Settings</h3>
+            <div class="settings-row">
+                <div>
+                    <input type="checkbox" id="show-landmarks">
+                    <label for="show-landmarks">Show Face Landmarks</label>
+                </div>
+            </div>
+            <div class="settings-row">
+                <div>
+                    <input type="checkbox" id="show-ear">
+                    <label for="show-ear">Show Eye Aspect Ratio (EAR)</label>
+                </div>
+            </div>
+            <div class="settings-row">
+                <div>
+                    <input type="checkbox" id="show-blink-count">
+                    <label for="show-blink-count">Show Blink Count</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-section">
+            <h3>Detection Parameters</h3>
+            <div class="settings-row">
+                <label for="ear-threshold">EAR Threshold:</label>
+                <input type="number" id="ear-threshold" min="0.1" max="0.4" step="0.01" value="0.2">
+            </div>
+            <div class="settings-row">
+                <label for="min-blinks">Minimum Blink Count:</label>
+                <input type="number" id="min-blinks" min="1" max="999" step="1" value="1">
+            </div>
+            <div class="settings-row">
+                <label for="max-blinks">Maximum Blink Count:</label>
+                <input type="number" id="max-blinks" min="2" max="999" step="1" value="5">
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>EAR formula</h3>
+            <div class="ear-formula">
+                <div class="formula">
+                    EAR = (||p2-p6|| + ||p3-p5||) / (2 * ||p1-p4||)
+                </div>
+                <svg class="ear-diagram" viewBox="0 0 300 150">
+                    <!-- Eye outline -->
+                    <path d="M50,75 C100,30 200,30 250,75 C200,120 100,120 50,75" 
+                          fill="none" stroke="black" stroke-width="2"/>
+                    
+                    <!-- Landmark points -->
+                    <circle cx="50" cy="75" r="4" fill="green"/>
+                    <circle cx="100" cy="45" r="4" fill="green"/>
+                    <circle cx="150" cy="35" r="4" fill="green"/>
+                    <circle cx="250" cy="75" r="4" fill="green"/>
+                    <circle cx="150" cy="115" r="4" fill="green"/>
+                    <circle cx="100" cy="105" r="4" fill="green"/>
+                    
+                    <!-- Point labels -->
+                    <text x="40" y="70" font-size="12">p1</text>
+                    <text x="95" y="40" font-size="12">p2</text>
+                    <text x="145" y="30" font-size="12">p3</text>
+                    <text x="260" y="70" font-size="12">p4</text>
+                    <text x="145" y="130" font-size="12">p5</text>
+                    <text x="95" y="120" font-size="12">p6</text>
+                    
+                    <!-- Distance lines -->
+                    <line x1="100" y1="45" x2="100" y2="105" stroke="blue" stroke-width="1" stroke-dasharray="4"/>
+                    <line x1="150" y1="35" x2="150" y2="115" stroke="blue" stroke-width="1" stroke-dasharray="4"/>
+                    <line x1="50" y1="75" x2="250" y2="75" stroke="red" stroke-width="1" stroke-dasharray="4"/>
+                </svg>
+                <div class="ear-explanation">
+                    where p1-p6 are the eye landmark points shown above
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="result-container">
+        <div id="status"></div>
+        <div id="video-container">
+            <img id="video-feed" src="" style="display: none;">
+            <img id="capture-image" alt="Captured Image" style="display: none;">
+        </div>
+    </div>
+
+    <script src="static/js/app.js"></script>
+</body>
+</html>
